@@ -7,4 +7,5 @@ type Vendor struct {
 	Location      string
 	Email         string
 	PoNum         string
+	ShareOffPrice bool // Send warning Off Price if true
 }
