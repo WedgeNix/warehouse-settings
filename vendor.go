@@ -1,7 +1,7 @@
 package warehouse
 
-// vendor holds vendor-specific settings.
-type vendor struct {
+// Vendor holds vendor-specific settings.
+type Vendor struct {
 	WeekendBuffer int
 	WeekdayBuffer int
 	Location      string
@@ -14,4 +14,4 @@ type vendor struct {
 }
 
 // Settings is the JSON settings file format.
-type Settings map[string]vendor
+type Settings map[string]Vendor
