@@ -15,3 +15,5 @@ type Vendor struct {
 
 // Settings is the JSON settings file format.
 type Settings map[string]Vendor
+
+// test
