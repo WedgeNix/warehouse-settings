@@ -21,8 +21,8 @@ type QueryStruct struct {
 	Time  bool
 }
 
-// SettingsFile is the overal data struct for whole v2 settings.
-type SettingsFile struct {
+// All is the overal data struct for whole v2 settings.
+type All struct {
 	Email         []string
 	FileDownload  bool
 	Location      string
@@ -37,10 +37,11 @@ type SettingsFile struct {
 	Monitor       bool
 	RecvBuffer    int
 	ReorderWindow float64
+	Regex         string
 }
 
-// AppBananas struct for Bannanas app settings.
-type AppBananas struct {
+// Bananas struct for Bannanas app settings.
+type Bananas struct {
 	Email         []string
 	FileDownload  bool
 	Location      string
@@ -51,17 +52,18 @@ type AppBananas struct {
 	Monitor       bool
 	RecvBuffer    int
 	ReorderWindow float64
+	Regex         string
 }
 
-// AppD2s struct for D2s app settings.
-type AppD2s struct {
+// D2s struct for D2s app settings.
+type D2s struct {
 	WeekdayBuffer int
 	WeekendBuffer int
 	WaitingPeriod int
 }
 
-// AppScriptToRuleThemAll struct for ScriptToRuleThemAll app settings.
-type AppScriptToRuleThemAll struct {
+// ScriptToRuleThemAll struct for ScriptToRuleThemAll app settings.
+type ScriptToRuleThemAll struct {
 	FileCount   int
 	TestMode    bool
 	GoogleSheet bool
@@ -69,8 +71,8 @@ type AppScriptToRuleThemAll struct {
 	Location    string
 }
 
-// AppEmailGrabber struct for EmailGrabber app settings.
-type AppEmailGrabber struct {
+// EmailGrabber struct for EmailGrabber app settings.
+type EmailGrabber struct {
 	Label string
 	Query []QueryStruct
 }

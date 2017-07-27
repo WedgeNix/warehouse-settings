@@ -5,9 +5,9 @@ import (
 	"io/ioutil"
 	"net/http"
 
-	"os"
+	"github.com/WedgeNix/warehouse-settings/app"
 
-	"github.com/WedgeNix/warehouse-settings/file"
+	"os"
 )
 
 // Controller keeps data for Do.
@@ -31,17 +31,19 @@ func New() *Controller {
 }
 
 // Do sends request to settings server for the particular settings file.
-func (c *Controller) Do(f file.Any) []error {
+func (c *Controller) Do(a app.Any) []error {
 	errs := []error{}
 	q := "?appname="
-	switch f.(type) {
-	case file.AppBananas:
+	switch a.(type) {
+	case app.All:
+		q += "all"
+	case app.Bananas:
 		q += "bananas"
-	case file.AppD2s:
+	case app.D2s:
 		q += "d2s"
-	case file.AppScriptToRuleThemAll:
+	case app.ScriptToRuleThemAll:
 		q += "thescripttorulethemall"
-	case file.AppEmailGrabber:
+	case app.EmailGrabber:
 		q += "EmailGrabber"
 	}
 	req, err := http.NewRequest(http.MethodGet, c.url+q, nil)
@@ -63,7 +65,7 @@ func (c *Controller) Do(f file.Any) []error {
 		return append(errs, err)
 	}
 
-	err = json.Unmarshal(b, f)
+	err = json.Unmarshal(b, a)
 	if err != nil {
 		return append(errs, err)
 	}
