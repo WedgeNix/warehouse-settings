@@ -13,7 +13,7 @@ type D2s map[string]types.D2s
 type ScriptToRuleThemAll map[string]types.ScriptToRuleThemAll
 type EmailGrabber map[string]types.EmailGrabber
 
-func (_ SettingsFile) __()        {}
+func (_ All) __()                 {}
 func (_ Bananas) __()             {}
 func (_ D2s) __()                 {}
 func (_ ScriptToRuleThemAll) __() {}
