@@ -6,7 +6,7 @@ type Any interface {
 }
 
 // Ats is for the Script to rule them all part of the v2 settings file.
-type Ats struct {
+type Ats map[string]struct {
 	FileCount   int
 	TestMode    bool
 	GoogleSheet bool
@@ -14,20 +14,20 @@ type Ats struct {
 }
 
 // EmailDownlaod GAS scrupt uses this info.
-type EmailDownlaod struct {
+type EmailDownlaod map[string]struct {
 	Label string
 	Query []QueryStruct
 }
 
 // QueryStruct holds search settings for emailDownlaod.
-type QueryStruct struct {
+type QueryStruct map[string]struct {
 	Ext   string
 	Query string
 	Time  bool
 }
 
 // SettingsFile is the overal data struct for whole v2 settings.
-type SettingsFile struct {
+type SettingsFile map[string]struct {
 	Email         []string
 	FileDownload  bool
 	Location      string
@@ -45,7 +45,7 @@ type SettingsFile struct {
 }
 
 // AppBananas struct for Bannanas app settings.
-type AppBananas struct {
+type AppBananas map[string]struct {
 	Email         []string
 	FileDownload  bool
 	Location      string
@@ -59,14 +59,14 @@ type AppBananas struct {
 }
 
 // AppD2s struct for D2s app settings.
-type AppD2s struct {
+type AppD2s map[string]struct {
 	WeekdayBuffer int
 	WeekendBuffer int
 	WaitingPeriod int
 }
 
 // AppScriptToRuleThemAll struct for ScriptToRuleThemAll app settings.
-type AppScriptToRuleThemAll struct {
+type AppScriptToRuleThemAll map[string]map[string]struct {
 	FileCount   int
 	TestMode    bool
 	GoogleSheet bool
@@ -75,7 +75,7 @@ type AppScriptToRuleThemAll struct {
 }
 
 // AppEmailGrabber struct for EmailGrabber app settings.
-type AppEmailGrabber struct {
+type AppEmailGrabber map[string]struct {
 	Label string
 	Query []QueryStruct
 }

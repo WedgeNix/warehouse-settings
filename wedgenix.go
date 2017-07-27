@@ -10,12 +10,14 @@ import (
 	"github.com/WedgeNix/warehouse-settings/file"
 )
 
+// Controller keeps data for Do.
 type Controller struct {
 	url  string
 	user string
 	pass string
 }
 
+// New new controller, and gets credentials from environment variables
 func New() *Controller {
 	settingsURL := os.Getenv("SETTINGS_URL")
 	settingsUser := os.Getenv("SETTINGS_USER")
@@ -28,9 +30,21 @@ func New() *Controller {
 	}
 }
 
+// Do sends request to settings server for the particular settings file.
 func (c *Controller) Do(f file.Any) []error {
 	errs := []error{}
-	req, err := http.NewRequest(http.MethodGet, c.url+f.q, nil)
+	q := "?appname="
+	switch f.(type) {
+	case file.AppBananas:
+		q += "bananas"
+	case file.AppD2s:
+		q += "d2s"
+	case file.AppScriptToRuleThemAll:
+		q += "thescripttorulethemall"
+	case file.AppEmailGrabber:
+		q += "EmailGrabber"
+	}
+	req, err := http.NewRequest(http.MethodGet, c.url+q, nil)
 	if err != nil {
 		return append(errs, err)
 	}
@@ -49,10 +63,9 @@ func (c *Controller) Do(f file.Any) []error {
 		return append(errs, err)
 	}
 
-	settings := map[string]f{}
-	err = json.Unmarshal(b, &settings)
+	err = json.Unmarshal(b, f)
 	if err != nil {
 		return append(errs, err)
 	}
-
+	return nil
 }
