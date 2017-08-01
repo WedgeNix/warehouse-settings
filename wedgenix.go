@@ -2,7 +2,7 @@ package wedgenix
 
 import (
 	"encoding/json"
-	"fmt"
+	"errors"
 	"io/ioutil"
 	"net/http"
 
@@ -32,27 +32,25 @@ func New() *Controller {
 }
 
 // Do sends request to settings server for the particular settings file.
-func (c *Controller) Do(a app.Any) []error {
-	errs := []error{}
+func (c *Controller) Do(a app.Any) error {
 	q := "?appname="
 	switch a.(type) {
-	case app.All:
+	case *app.All:
 		q += "all"
-	case app.Bananas:
-		fmt.Println("Converted to bans")
+	case *app.Bananas:
 		q += "bananas"
-	case app.D2s:
+	case *app.D2s:
 		q += "d2s"
-	case app.ScriptToRuleThemAll:
+	case *app.ScriptToRuleThemAll:
 		q += "thescripttorulethemall"
-	case app.EmailGrabber:
+	case *app.EmailGrabber:
 		q += "EmailGrabber"
 	default:
-		fmt.Println("Unknown type")
+		return errors.New("Unknown type")
 	}
 	req, err := http.NewRequest(http.MethodGet, c.url+q, nil)
 	if err != nil {
-		return append(errs, err)
+		return err
 	}
 	req.Header.Add("User", c.user)
 	req.Header.Add("Pass", c.pass)
@@ -60,18 +58,18 @@ func (c *Controller) Do(a app.Any) []error {
 	cl := http.Client{}
 	resp, err := cl.Do(req)
 	if err != nil {
-		return append(errs, err)
+		return err
 	}
 	defer resp.Body.Close()
 
 	b, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		return append(errs, err)
+		return err
 	}
 
 	err = json.Unmarshal(b, a)
 	if err != nil {
-		return append(errs, err)
+		return err
 	}
 	return nil
 }
