@@ -35,8 +35,6 @@ type All struct {
 	ATS           Ats
 	EmaiDownload  EmailDownlaod
 	Monitor       bool
-	RecvBuffer    int
-	ReorderWindow float64
 	Regex         string
 	ReordPtAdd    int
 }
@@ -51,8 +49,6 @@ type Bananas struct {
 	WaitingPeriod int
 	UseUPC        bool
 	Monitor       bool
-	RecvBuffer    int
-	ReorderWindow float64
 	Regex         string
 	ReordPtAdd    int
 }
