@@ -2,6 +2,7 @@ package wedgenix
 
 import (
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"net/http"
 
@@ -38,6 +39,7 @@ func (c *Controller) Do(a app.Any) []error {
 	case app.All:
 		q += "all"
 	case app.Bananas:
+		fmt.Println("Converted to bans")
 		q += "bananas"
 	case app.D2s:
 		q += "d2s"
@@ -45,6 +47,8 @@ func (c *Controller) Do(a app.Any) []error {
 		q += "thescripttorulethemall"
 	case app.EmailGrabber:
 		q += "EmailGrabber"
+	default:
+		fmt.Println("Unknown type")
 	}
 	req, err := http.NewRequest(http.MethodGet, c.url+q, nil)
 	if err != nil {
