@@ -38,6 +38,7 @@ type All struct {
 	RecvBuffer    int
 	ReorderWindow float64
 	Regex         string
+	ReordPtAdd    int
 }
 
 // Bananas struct for Bannanas app settings.
@@ -53,6 +54,7 @@ type Bananas struct {
 	RecvBuffer    int
 	ReorderWindow float64
 	Regex         string
+	ReordPtAdd    int
 }
 
 // D2s struct for D2s app settings.
