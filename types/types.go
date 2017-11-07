@@ -35,6 +35,7 @@ type All struct {
 	ATS           Ats
 	EmaiDownload  EmailDownlaod
 	Monitor       bool
+	Hybrid        bool
 	Regex         string
 	ReordPtAdd    int
 }
@@ -51,6 +52,7 @@ type Bananas struct {
 	Monitor       bool
 	Regex         string
 	ReordPtAdd    int
+	Hybrid        bool
 }
 
 // D2s struct for D2s app settings.
