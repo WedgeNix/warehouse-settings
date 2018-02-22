@@ -55,6 +55,13 @@ type Bananas struct {
 	Hybrid        bool
 }
 
+func (b Bananas) Copy() Bananas {
+	db := b
+	db.Email = make([]string, len(b.Email))
+	copy(db.Email, b.Email)
+	return db
+}
+
 // D2s struct for D2s app settings.
 type D2s struct {
 	WeekdayBuffer int

@@ -3,7 +3,6 @@ package wedgenix
 import (
 	"encoding/json"
 	"errors"
-	"io/ioutil"
 	"net/http"
 
 	"github.com/WedgeNix/warehouse-settings/app"
@@ -16,6 +15,27 @@ type Controller struct {
 	url  string
 	user string
 	pass string
+}
+
+func Settings(ptr app.Any) error {
+	url, found := os.LookupEnv("SETTINGS_URL")
+	if !found {
+		return errors.New("missing SETTINGS_URL")
+	}
+	user, found := os.LookupEnv("SETTINGS_USER")
+	if !found {
+		return errors.New("missing SETTINGS_USER")
+	}
+	pass, found := os.LookupEnv("SETTINGS_PASS")
+	if !found {
+		return errors.New("missing SETTINGS_PASS")
+	}
+	ctr := Controller{
+		url:  url,
+		user: user,
+		pass: pass,
+	}
+	return ctr.Do(ptr)
 }
 
 // New new controller, and gets credentials from environment variables
@@ -32,9 +52,9 @@ func New() *Controller {
 }
 
 // Do sends request to settings server for the particular settings file.
-func (c *Controller) Do(a app.Any) error {
+func (c *Controller) Do(ptr app.Any) error {
 	q := "?appname="
-	switch a.(type) {
+	switch ptr.(type) {
 	case *app.All:
 		q += "all"
 	case *app.Bananas:
@@ -46,7 +66,7 @@ func (c *Controller) Do(a app.Any) error {
 	case *app.EmailGrabber:
 		q += "EmailGrabber"
 	default:
-		return errors.New("Unknown type")
+		return errors.New("ptr required")
 	}
 	req, err := http.NewRequest(http.MethodGet, c.url+q, nil)
 	if err != nil {
@@ -62,14 +82,9 @@ func (c *Controller) Do(a app.Any) error {
 	}
 	defer resp.Body.Close()
 
-	b, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		return err
+	if resp.StatusCode >= 300 {
+		return errors.New("warehouse-settings: " + resp.Status)
 	}
 
-	err = json.Unmarshal(b, a)
-	if err != nil {
-		return err
-	}
-	return nil
+	return json.NewDecoder(resp.Body).Decode(ptr)
 }
