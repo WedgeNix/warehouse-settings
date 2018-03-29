@@ -80,6 +80,7 @@ type ScriptToRuleThemAll struct {
 
 // EmailGrabber struct for EmailGrabber app settings.
 type EmailGrabber struct {
-	Label string
-	Query []QueryStruct
+	Label       string
+	Query       []QueryStruct
+	GoogleSheet bool
 }
