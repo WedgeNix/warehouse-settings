@@ -83,4 +83,5 @@ type EmailGrabber struct {
 	Label       string
 	Query       []QueryStruct
 	GoogleSheet bool
+	SheetNumber int
 }
